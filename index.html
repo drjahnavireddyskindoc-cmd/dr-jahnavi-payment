@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pay ₹450 – Dr. Jahnavi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      text-align: center;
+      padding: 40px 16px;
+    }
+    .card {
+      max-width: 420px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    p {
+      color: #555;
+      font-size: 15px;
+    }
+    .pay-btn {
+      display: block;
+      margin: 20px 0;
+      padding: 14px;
+      background: #0f9d58;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 8px;
+    }
+    .qr {
+      margin-top: 20px;
+    }
+    .qr img {
+      width: 220px;
+    }
+    .note {
+      font-size: 13px;
+      color: #777;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Pay ₹450</h1>
+    <p>Derma Consultation with <strong>Dr. Jahnavi</strong></p>
+
+    <!-- UPI Button -->
+    <a id="upiBtn" class="pay-btn" href="#">
+      Pay using UPI App
+    </a>
+
+    <!-- QR Section -->
+    <div id="qrSection" class="qr" style="display:none;">
+      <p>Scan QR using Google Pay / PhonePe / Paytm</p>
+      <img src="upi-qr.png" alt="UPI QR Code" />
+    </div>
+
+    <p class="note">
+      After payment, return to the form and upload the payment screenshot.
+    </p>
+  </div>
+
+  <script>
+    const upiLink = "upi://pay?pa=jahnavi.yatham@oksbi&pn=Dr.%20Jahnavi&am=450&cu=INR&tn=Derma%20Consultation%20with%20Dr.%20Jahnavi";
+
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    const upiBtn = document.getElementById("upiBtn");
+    const qrSection = document.getElementById("qrSection");
+
+    if (isMobile) {
+      upiBtn.href = upiLink;
+    } else {
+      upiBtn.style.display = "none";
+      qrSection.style.display = "block";
+    }
+  </script>
+</body>
+</html>
