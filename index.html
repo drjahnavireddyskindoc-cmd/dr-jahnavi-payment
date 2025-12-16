@@ -8,73 +8,135 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
       background: #f9fafb;
-      text-align: center;
-      padding: 40px 16px;
     }
-    .card {
-      max-width: 420px;
-      margin: auto;
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    .container {
+      max-width: 100%;
+      padding: 16px;
     }
+
     h1 {
-      font-size: 22px;
-      margin-bottom: 8px;
+      text-align: center;
+      margin-bottom: 4px;
     }
+
     p {
+      text-align: center;
       color: #555;
-      font-size: 15px;
+      margin-top: 0;
     }
+
+    /* PAYMENT BUTTON */
     .pay-btn {
-      display: block;
-      margin: 20px 0;
-      padding: 14px;
       background: #0f9d58;
       color: white;
-      text-decoration: none;
+      border: none;
+      padding: 16px;
       font-size: 18px;
       border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
     }
-    .qr img {
+
+    /* FIXED MOBILE BUTTON */
+    .fixed-pay {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 12px;
+      background: white;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* QR MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .modal-content img {
       width: 220px;
-      margin-top: 12px;
     }
+
+    .close {
+      margin-top: 12px;
+      background: #d93025;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* FULL WIDTH TALLY */
     iframe {
       width: 100%;
+      height: 650px;
       border: none;
       margin-top: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .fixed-pay {
+        position: static;
+        box-shadow: none;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="card">
+
+  <div class="container">
     <h1>Pay ₹450</h1>
     <p>Derma Consultation with <strong>Dr. Jahnavi</strong></p>
 
-    <!-- UPI Button -->
-    <a id="upiBtn" class="pay-btn" href="#">
-      Pay using UPI App
-    </a>
-
-    <!-- QR Section -->
-    <div id="qrSection" class="qr" style="display:none;">
-      <p>Scan QR using Google Pay / PhonePe / Paytm</p>
-      <img src="upi-qr.png" alt="UPI QR Code" />
-    </div>
+    <!-- DESKTOP BUTTON -->
+    <button id="desktopPayBtn" class="pay-btn" style="display:none;">
+      Show QR to Pay
+    </button>
 
     <!-- TALLY FORM -->
     <iframe
       data-tally-src="https://tally.so/r/RGxXal"
-      height="520"
       loading="lazy">
     </iframe>
   </div>
 
-  <!-- TALLY EMBED SCRIPT -->
+  <!-- MOBILE FIXED BUTTON -->
+  <div class="fixed-pay" id="mobilePayBar" style="display:none;">
+    <button id="mobilePayBtn" class="pay-btn">
+      Pay using UPI App
+    </button>
+  </div>
+
+  <!-- QR MODAL -->
+  <div class="modal" id="qrModal">
+    <div class="modal-content">
+      <p>Scan with Google Pay / PhonePe / Paytm</p>
+      <img src="upi-qr.png" />
+      <br />
+      <button class="close" onclick="closeQR()">Close</button>
+    </div>
+  </div>
+
+  <!-- TALLY SCRIPT -->
   <script>
     var d = document, w = "https://tally.so/widgets/embed.js";
     if (!d.querySelector(`script[src="${w}"]`)) {
@@ -85,20 +147,36 @@
     }
   </script>
 
-  <!-- DEVICE DETECTION -->
+  <!-- LOGIC -->
   <script>
-    const upiLink = "upi://pay?pa=jahnavi.yatham@oksbi&pn=Dr.%20Jahnavi&am=450&cu=INR&tn=Derma%20Consultation%20with%20Dr.%20Jahnavi";
+    const upiLink =
+      "upi://pay?pa=jahnavi.yatham@oksbi&pn=Dr.%20Jahnavi&am=450&cu=INR&tn=Derma%20Consultation%20with%20Dr.%20Jahnavi";
+
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    const upiBtn = document.getElementById("upiBtn");
-    const qrSection = document.getElementById("qrSection");
+    const mobileBtn = document.getElementById("mobilePayBtn");
+    const mobileBar = document.getElementById("mobilePayBar");
+    const desktopBtn = document.getElementById("desktopPayBtn");
+    const modal = document.getElementById("qrModal");
 
     if (isMobile) {
-      upiBtn.href = upiLink;
+      mobileBar.style.display = "block";
+
+      mobileBtn.onclick = () => {
+        window.location.href = upiLink;
+      };
     } else {
-      upiBtn.style.display = "none";
-      qrSection.style.display = "block";
+      desktopBtn.style.display = "block";
+
+      desktopBtn.onclick = () => {
+        modal.style.display = "flex";
+      };
+    }
+
+    function closeQR() {
+      modal.style.display = "none";
     }
   </script>
+
 </body>
 </html>
