@@ -25,14 +25,13 @@
       margin-bottom: 24px;
     }
 
-    /* FULL WIDTH TALLY FORM */
     iframe {
       width: 100%;
       height: 720px;
       border: none;
     }
 
-    /* FIXED PAY BUTTON BAR */
+    /* BOTTOM PAY BUTTON */
     .pay-bar {
       position: fixed;
       bottom: 16px;
@@ -57,7 +56,7 @@
       cursor: pointer;
     }
 
-    /* QR MODAL */
+    /* MODALS */
     .modal {
       display: none;
       position: fixed;
@@ -73,12 +72,8 @@
       padding: 24px;
       border-radius: 14px;
       text-align: center;
-      max-width: 300px;
-    }
-
-    .modal-content img {
-      width: 220px;
-      margin-top: 12px;
+      max-width: 320px;
+      width: 90%;
     }
 
     .close-btn {
@@ -91,14 +86,30 @@
       cursor: pointer;
     }
 
-    /* Prevent button overlap on desktop */
-    @media (min-width: 768px) {
-      body {
-        padding-bottom: 0;
-      }
+    /* UPI OPTIONS */
+    .upi-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
     }
 
-    /* Add space for button on mobile */
+    .upi-option {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px;
+      text-decoration: none;
+      color: black;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .upi-option img {
+      height: 28px;
+    }
+
     @media (max-width: 767px) {
       body {
         padding-bottom: 96px;
@@ -112,34 +123,59 @@
   <h1>Pay ₹450</h1>
   <p class="subtitle">Derma Consultation with <strong>Dr. Jahnavi</strong></p>
 
-  <!-- TALLY FORM (FULL WIDTH) -->
+  <!-- TALLY FORM -->
   <iframe
-    data-tally-src="https://tally.so/r/RGxXal"
+    data-tally-src="https://tally.so/r/XXXXXX"
     loading="lazy">
   </iframe>
 
-  <!-- FIXED PAY BUTTON -->
+  <!-- PAY BUTTON -->
   <div class="pay-bar">
-    <a
-      id="payBtn"
-      class="pay-btn"
-      href="upi://pay?pa=jahnavireddy.yatham@oksbi&pn=Jahnavi%20Reddy&am=450&cu=INR&tn=Dermatology%20consultation%20fee"
-    >
-      Show QR to Pay
-    </a>
+    <button id="payBtn" class="pay-btn">Pay Consultation Fee</button>
   </div>
 
-  <!-- QR MODAL (DESKTOP ONLY) -->
+  <!-- DESKTOP QR MODAL -->
   <div class="modal" id="qrModal">
     <div class="modal-content">
       <p>Scan using Google Pay / PhonePe / Paytm</p>
-      <img src="upi-qr.png" alt="UPI QR" />
+      <img src="upi-qr.png" width="220" />
       <br />
       <button class="close-btn" onclick="closeQR()">Close</button>
     </div>
   </div>
 
-  <!-- TALLY EMBED SCRIPT -->
+  <!-- MOBILE UPI APP MODAL -->
+  <div class="modal" id="upiModal">
+    <div class="modal-content">
+      <p><strong>Choose a UPI App</strong></p>
+
+      <div class="upi-options">
+        <a class="upi-option" href="upi://pay?pa=jahnavireddy.yatham@oksbi&pn=Jahnavi%20Reddy&am=450&cu=INR&tn=Dermatology%20consultation%20fee">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Google_Pay_logo.svg" />
+          GPay
+        </a>
+
+        <a class="upi-option" href="upi://pay?pa=jahnavireddy.yatham@oksbi&pn=Jahnavi%20Reddy&am=450&cu=INR&tn=Dermatology%20consultation%20fee">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/PhonePe_Logo.svg" />
+          PhonePe
+        </a>
+
+        <a class="upi-option" href="upi://pay?pa=jahnavireddy.yatham@oksbi&pn=Jahnavi%20Reddy&am=450&cu=INR&tn=Dermatology%20consultation%20fee">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Paytm_logo.png" />
+          Paytm
+        </a>
+
+        <a class="upi-option" href="upi://pay?pa=jahnavireddy.yatham@oksbi&pn=Jahnavi%20Reddy&am=450&cu=INR&tn=Dermatology%20consultation%20fee">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/CRED_logo.png" />
+          CRED
+        </a>
+      </div>
+
+      <button class="close-btn" onclick="closeUPI()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- TALLY SCRIPT -->
   <script>
     var d = document, w = "https://tally.so/widgets/embed.js";
     if (!d.querySelector(`script[src="${w}"]`)) {
@@ -150,22 +186,27 @@
     }
   </script>
 
-  <!-- DEVICE LOGIC -->
+  <!-- LOGIC -->
   <script>
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     const payBtn = document.getElementById("payBtn");
-    const modal = document.getElementById("qrModal");
+    const qrModal = document.getElementById("qrModal");
+    const upiModal = document.getElementById("upiModal");
 
-    if (!isMobile) {
-      // Desktop → show QR modal instead of redirect
-      payBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        modal.style.display = "flex";
-      });
-    }
+    payBtn.onclick = () => {
+      if (isMobile) {
+        upiModal.style.display = "flex";
+      } else {
+        qrModal.style.display = "flex";
+      }
+    };
 
     function closeQR() {
-      modal.style.display = "none";
+      qrModal.style.display = "none";
+    }
+
+    function closeUPI() {
+      upiModal.style.display = "none";
     }
   </script>
 
