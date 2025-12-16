@@ -38,16 +38,14 @@
       font-size: 18px;
       border-radius: 8px;
     }
-    .qr {
-      margin-top: 20px;
-    }
     .qr img {
       width: 220px;
+      margin-top: 12px;
     }
-    .note {
-      font-size: 13px;
-      color: #777;
-      margin-top: 16px;
+    iframe {
+      width: 100%;
+      border: none;
+      margin-top: 24px;
     }
   </style>
 </head>
@@ -68,18 +66,28 @@
       <img src="upi-qr.png" alt="UPI QR Code" />
     </div>
 
-<p class="note">
-  After payment, 
-  <a href="https://forms.gle/xiQ2t5HP8CZpE6m16" target="_blank">
-    click here to return to the form and upload the payment screenshot
-  </a>.
-</p>
-
+    <!-- TALLY FORM -->
+    <iframe
+      data-tally-src="https://tally.so/r/RGxXal"
+      height="520"
+      loading="lazy">
+    </iframe>
   </div>
 
+  <!-- TALLY EMBED SCRIPT -->
   <script>
-    const upiLink = "upi://pay?pa=jahnavireddy.yatham@oksbi&pn=Dr.%20Jahnavi&am=450&cu=INR&tn=Derma%20Consultation%20with%20Dr.%20Jahnavi";
+    var d = document, w = "https://tally.so/widgets/embed.js";
+    if (!d.querySelector(`script[src="${w}"]`)) {
+      var s = d.createElement("script");
+      s.src = w;
+      s.async = true;
+      d.body.appendChild(s);
+    }
+  </script>
 
+  <!-- DEVICE DETECTION -->
+  <script>
+    const upiLink = "upi://pay?pa=jahnavi.yatham@oksbi&pn=Dr.%20Jahnavi&am=450&cu=INR&tn=Derma%20Consultation%20with%20Dr.%20Jahnavi";
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     const upiBtn = document.getElementById("upiBtn");
