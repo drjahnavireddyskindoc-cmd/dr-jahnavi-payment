@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pay ₹450 – Dr. Jahnavi</title>
+  <title>Derma Consultation – Dr. Jahnavi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
@@ -10,17 +10,26 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f9fafb;
+      color: #222;
+    }
+
+    header {
+      padding: 24px 16px 12px;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
-      margin: 24px 0 4px;
+      margin: 0 0 12px;
+      font-size: 26px;
     }
 
-    p.subtitle {
-      text-align: center;
+    h2 {
+      font-size: 15px;
+      font-weight: normal;
       color: #555;
-      margin: 0 0 20px;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     /* FULL WIDTH TALLY FORM */
@@ -111,6 +120,15 @@
       width: auto;
     }
 
+    .qr-mobile {
+      margin-top: 18px;
+    }
+
+    .qr-mobile img {
+      width: 180px;
+      margin-top: 8px;
+    }
+
     @media (max-width: 767px) {
       body {
         padding-bottom: 96px;
@@ -121,8 +139,17 @@
 
 <body>
 
-  <h1>Pay ₹450</h1>
-  <p class="subtitle">Derma Consultation with <strong>Dr. Jahnavi</strong></p>
+  <!-- HEADER -->
+  <header>
+    <h1>Derma Consultation with Dr. Jahnavi</h1>
+    <h2>
+      Welcome to the tele-dermatology portal of Dr. Jahnavi Reddy (MBBS, MD DVL).
+      To provide you with the most accurate diagnosis and personalised treatment plan,
+      please complete this form thoroughly.
+      <br><br>
+      Book your slot via the link provided after the submission of this form.
+    </h2>
+  </header>
 
   <!-- TALLY FORM -->
   <iframe
@@ -167,16 +194,15 @@
            href="paytmmp://pay?pa=jahnavireddy.yatham@oksbi&pn=Jahnavi%20Reddy&am=450&cu=INR&tn=Dermatology%20consultation%20fee">
           <img src="paytm.png" alt="Paytm" /> Paytm
         </a>
-
-        <a class="upi-option"
-           href="credpay://pay?pa=jahnavireddy.yatham@oksbi&pn=Jahnavi%20Reddy&am=450&cu=INR&tn=Dermatology%20consultation%20fee">
-          <img src="cred.png" alt="CRED" /> CRED
-        </a>
       </div>
 
-      <p style="font-size:12px;color:#666;margin-top:12px;">
-        If the app doesn’t open, please scan the QR instead.
-      </p>
+      <!-- QR FALLBACK ON MOBILE -->
+      <div class="qr-mobile">
+        <p style="font-size:13px;color:#555;">
+          Or scan the QR using any UPI app
+        </p>
+        <img src="upi-qr.png" alt="UPI QR" />
+      </div>
 
       <button class="close-btn" onclick="closeUPI()">Cancel</button>
     </div>
